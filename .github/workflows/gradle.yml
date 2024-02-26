@@ -25,3 +25,6 @@ jobs:
 
       - name: Assemble with Gradle Wrapper
         run: ./gradlew assemble
+
+      - name: Build image
+        run: ./gradlew dockerBuild
