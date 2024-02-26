@@ -25,3 +25,8 @@ jobs:
 
       - name: Assemble with Gradle Wrapper
         run: ./gradlew assemble
+      - uses: actions/upload-artifact@v4
+        with: 
+          name: upload-jar
+          path: build/libs/team4-office-lunch-management-0.1-all.jar
+
