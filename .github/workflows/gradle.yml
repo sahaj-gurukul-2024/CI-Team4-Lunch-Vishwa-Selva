@@ -30,6 +30,7 @@ jobs:
           name: upload-jar
           path: build/libs/team4-office-lunch-management-0.1-all.jar
   image-build:
+    needs: jar-build
     runs-on: ubuntu-latest
     permissions:
       contents: read
