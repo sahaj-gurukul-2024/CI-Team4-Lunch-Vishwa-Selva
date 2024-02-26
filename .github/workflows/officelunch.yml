@@ -8,7 +8,7 @@ on:
 
 jobs:
   test-backend:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
     container:
@@ -25,7 +25,7 @@ jobs:
 
   build-jar:
     needs: test-backend
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
     container:
@@ -44,7 +44,7 @@ jobs:
 
   build-artifact:
     needs: build-jar
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
     steps:
