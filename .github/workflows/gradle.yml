@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  container-build:
+  jar-build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -29,4 +29,22 @@ jobs:
         with: 
           name: upload-jar
           path: build/libs/team4-office-lunch-management-0.1-all.jar
+  image-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with: 
+          name: upload-jar
+          path: .
+      - name: Build Docker image
+        run: docker build -t sample .
+        
+      
+
+        
 
