@@ -41,9 +41,9 @@ jobs:
         uses: actions/download-artifact@v4
         with: 
           name: upload-jar
-          path: .
+          path: /jarfile/
       - name: Build Docker image
-        run: docker build -t sample .
+        run: ls /jarfile/ && docker build -t sample .
         
       
 
