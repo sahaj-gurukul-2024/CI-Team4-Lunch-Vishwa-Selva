@@ -45,9 +45,6 @@ java {
     sourceCompatibility = JavaVersion.toVersion("21")
 }
 
-tasks.named<MicronautDockerfile>("dockerfile") {
-    baseImage.set("eclipse-temurin:21.0.2_13-jdk")
-}
 
 graalvmNative.toolchainDetection.set(false)
 micronaut {
