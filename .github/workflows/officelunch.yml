@@ -7,8 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-
-  jar-build:
+  test-backend:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -24,14 +23,27 @@ jobs:
       - name: Unit Test with Gradle Wrapper
         run: ./gradlew test --tests "service.*"
 
+  build-jar:
+    needs: test-backend
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: eclipse-temurin:21.0.2_13-jdk
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
       - name: Assemble with Gradle Wrapper
         run: ./gradlew assemble
+        
       - uses: actions/upload-artifact@v4
         with: 
           name: upload-jar
           path: build/libs/team4-office-lunch-management-0.1-all.jar
-  image-build:
-    needs: jar-build
+
+  build-artifact:
+    needs: build-jar
     runs-on: ubuntu-latest
     permissions:
       contents: read
