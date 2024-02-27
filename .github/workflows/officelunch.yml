@@ -118,7 +118,7 @@ jobs:
           ECR_REPOSITORY: ci-team4-vishwa-and-selva
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker run -p 8080:8081 \
+          docker run -d -p 8081:8080 \
           -e JDBC_HOST=${{ secrets.JDBC_HOST }} \
           -e JDBC_PORT=${{ secrets.JDBC_PORT }} \
           -e DB_NAME=${{ secrets.DB_NAME }} \
