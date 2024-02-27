@@ -79,8 +79,9 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
-  deployment:
-    needs: build-jar
+  dev-deployment:
+    environment: Dev
+    needs: build-artifact
     runs-on: self-hosted
     steps:
       - name: Configure AWS credentials
@@ -89,9 +90,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ap-south-1
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
+
       - name: Pull image from Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -99,6 +102,17 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      name: Run backend
+        run: |
+          docker run  -p 8080:8081 \
+          -e JDBC_HOST= ${{ secrets.JDBC_HOST }} \
+          -e JDBC_PORT= ${{ secrets.JDBC_PORT }} \
+          -e DB_NAME= ${{ secrets.DB_NAME }} \
+          -e DB_USERNAME= ${{ secrets.DB_USERNAME }} \
+          -e DB_PASSWORD= ${{ secrets.DB_PASSWORD }} \
+          --name dev_backend \
+          $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       
 
         
