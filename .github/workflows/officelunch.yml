@@ -103,7 +103,7 @@ jobs:
         run: |
           docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      name: Run backend
+      - name: Run backend
         run: |
           docker run  -p 8080:8081 \
           -e JDBC_HOST= ${{ secrets.JDBC_HOST }} \
