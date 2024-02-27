@@ -95,15 +95,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Pull image from Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ci-team4-vishwa-and-selva
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
-      - name: Run backend
+      - name: Run container from Latest Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ci-team4-vishwa-and-selva
